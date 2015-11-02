@@ -1,0 +1,6 @@
+communty.settings:
+  path: '/community1' 
+  defaults:
+    _form: '\Drupal\community\Form\CommunitySettingsForm'
+  requirements:
+    _permission: 'configure quotes'

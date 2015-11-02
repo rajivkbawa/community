@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the community module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function community_schema() {
+  $schema = array();
+
+  $schema['community'] = array(
+    'description' => 'Stores community user information for community wall.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'The {user}.uid.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'nid' => array(
+        'description' => 'The {products}.nid.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'pkg_type' => array(
+        'description' => 'The type of package in which the product will be shipped.',
+        'type' => 'varchar',
+        'length' => 2,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('id'),
+    'foreign keys' => array(
+      'uc_products' => array(
+        'table' => 'community',
+        'columns' => array(
+          'nid' => 'nid',
+          'uid' => 'uid',
+        ),
+      ),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function community_update_last_removed() {
+  return 7301;
+}
+
+/**
+ * @addtogroup updates-7.x-to-8.x
+ * @{
+ */
+
+/**
+ * Converts community system variables to config.
+ *
+ * @ingroup config_upgrade
+ */
+function community_update_8000() {
+
+  // Update most system variables to config settings.
+  update_variables_to_config(
+    'community.settings',
+    array(
+      'community_user_id' => 'user_id',
+      'community_password' => 'password',
+    )
+  );
+}

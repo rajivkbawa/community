@@ -1,0 +1,6 @@
+community.scripts:
+  js:
+    js/community.admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
